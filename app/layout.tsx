@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Generate License License Manager",
+  title: "License Manager",
   description:
     "Professional license generation dashboard for Generate License Agent — powered by Ed25519 cryptography.",
 };
