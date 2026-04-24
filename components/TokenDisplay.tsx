@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Copy, Check, KeyRound, AlertTriangle,
   ClipboardList, Fingerprint, Building2, Timer, Cpu,
@@ -22,8 +22,13 @@ export default function TokenDisplay({ tokens, meta, error }: Props) {
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [copiedAll, setCopiedAll] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [exportDone, setExportDone] = useState(false);
+  const [hasExported, setHasExported] = useState(false);
   const [expanded, setExpanded]   = useState(false);
+
+  // Reset export status when new tokens are generated
+  useEffect(() => {
+    setHasExported(false);
+  }, [tokens]);
 
   const copy = (text: string, idx: number) =>
     navigator.clipboard.writeText(text).then(() => {
@@ -37,12 +42,11 @@ export default function TokenDisplay({ tokens, meta, error }: Props) {
 
   /* Export — uses centralized service */
   const handleExport = async () => {
-    if (!meta || tokens.length === 0) return;
+    if (!meta || tokens.length === 0 || hasExported) return;
     setExporting(true);
     try {
       await licenseService.exportBundle(tokens, meta);
-      setExportDone(true);
-      setTimeout(() => setExportDone(false), 3000);
+      setHasExported(true);
     } catch (e) {
       console.error("Export failed:", e);
     } finally {
@@ -136,11 +140,11 @@ export default function TokenDisplay({ tokens, meta, error }: Props) {
           )}
 
           {/* Export */}
-          <button onClick={handleExport} disabled={exporting} style={{
+          <button onClick={handleExport} disabled={exporting || hasExported} style={{
             display: "inline-flex", alignItems: "center", gap: 5,
-            padding: "5px 11px", borderRadius: 7, cursor: exporting ? "not-allowed" : "pointer",
+            padding: "5px 11px", borderRadius: 7, cursor: exporting || hasExported ? "not-allowed" : "pointer",
             fontFamily: "inherit", fontSize: 11, fontWeight: 600, transition: "all 0.2s",
-            ...(exportDone
+            ...(hasExported
               ? { background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)", color: "#34d399" }
               : { background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.35)", color: "#818cf8", opacity: exporting ? 0.5 : 1 }),
           }}>
@@ -149,8 +153,8 @@ export default function TokenDisplay({ tokens, meta, error }: Props) {
                 <circle cx="12" cy="12" r="10" stroke="rgba(129,140,248,0.3)" strokeWidth="3" />
                 <path d="M12 2a10 10 0 0110 10" stroke="#818cf8" strokeWidth="3" strokeLinecap="round" />
               </svg>
-            ) : exportDone ? <Check size={11} /> : <Download size={11} />}
-            {exportDone ? "Downloaded!" : "Export .aglic"}
+            ) : hasExported ? <Check size={11} /> : <Download size={11} />}
+            {hasExported ? "Exported!" : "Export .aglic"}
           </button>
         </div>
       </div>

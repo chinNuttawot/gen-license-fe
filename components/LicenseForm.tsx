@@ -18,12 +18,13 @@ export interface LicenseFormValues {
 
 interface Props {
   onGenerate: (values: LicenseFormValues) => Promise<void>;
+  onReset?: () => void;
   loading: boolean;
 }
 
 const TODAY = new Date().toISOString().split("T")[0];
 
-export default function LicenseForm({ onGenerate, loading }: Props) {
+export default function LicenseForm({ onGenerate, onReset, loading }: Props) {
   const [company, setCompany]         = useState("");
   const [licenseType, setLicenseType] = useState<LicenseType>("account-based");
   const [quantity, setQuantity]       = useState(1);
@@ -83,6 +84,7 @@ export default function LicenseForm({ onGenerate, loading }: Props) {
   const handleReset = () => {
     setCompany(""); setLicenseType("account-based");
     setQuantity(1); setHwids([""]); setExpiry(""); setTouched({});
+    onReset?.();
   };
 
   const tokenCount = isStation ? hwids.length : quantity;

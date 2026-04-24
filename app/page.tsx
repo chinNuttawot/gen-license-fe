@@ -42,6 +42,12 @@ export default function HomePage() {
     }
   };
 
+  const handleReset = () => {
+    setTokens([]);
+    setMeta(null);
+    setError(null);
+  };
+
   return (
 
     <div className="relative min-h-screen grid-bg overflow-hidden" style={{ backgroundColor: "#080810" }}>
@@ -55,7 +61,7 @@ export default function HomePage() {
 
         <main className="flex-1 container mx-auto px-5 py-10 max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-            <LicenseForm onGenerate={handleGenerate} loading={loading} />
+            <LicenseForm onGenerate={handleGenerate} onReset={handleReset} loading={loading} />
             <TokenDisplay tokens={tokens} meta={meta} error={error} />
           </div>
         </main>
