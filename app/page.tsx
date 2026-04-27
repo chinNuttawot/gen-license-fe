@@ -59,15 +59,28 @@ export default function HomePage() {
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
 
-        <main className="flex-1 container mx-auto px-5 py-10 max-w-5xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-            <LicenseForm onGenerate={handleGenerate} onReset={handleReset} loading={loading} />
-            <TokenDisplay tokens={tokens} meta={meta} error={error} />
+        <main className="flex-1 flex flex-col items-center justify-center p-8" style={{ minHeight: "calc(100vh - 112px)" }}>
+          <div style={{ 
+            display: "flex", 
+            flexDirection: "row", 
+            gap: "32px", 
+            alignItems: "flex-start", 
+            justifyContent: "center",
+            width: "100%",
+            maxWidth: "1024px",
+            margin: "0 auto"
+          }}>
+            <div style={{ width: "460px", flexShrink: 0 }}>
+              <LicenseForm onGenerate={handleGenerate} onReset={handleReset} loading={loading} />
+            </div>
+            <div style={{ width: "460px", flexShrink: 0 }}>
+              <TokenDisplay tokens={tokens} meta={meta} error={error} />
+            </div>
           </div>
         </main>
 
-        <footer className="text-center py-5 text-[11px]" style={{ color: "#1e293b", borderTop: "1px solid rgba(255,255,255,0.03)" }}>
-          Generate License Agent &mdash; License Management System &copy; {new Date().getFullYear()}
+        <footer className="text-center py-6 text-[10px] tracking-[0.2em] uppercase opacity-20" style={{ color: "#94a3b8" }}>
+          License Management System &copy; {new Date().getFullYear()}
         </footer>
       </div>
     </div>

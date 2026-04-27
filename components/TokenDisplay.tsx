@@ -57,19 +57,22 @@ export default function TokenDisplay({ tokens, meta, error }: Props) {
   /* ── Empty ─────────────────────────────── */
   if (tokens.length === 0 && !error) {
     return (
-      <div className="gradient-border flex flex-col items-center justify-center text-center animate-fade-in"
-        style={{ minHeight: 320, padding: "32px 24px" }}>
-        <div style={{
-          width: 44, height: 44, borderRadius: 14, marginBottom: 14,
-          background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          <KeyRound size={20} color="#475569" strokeWidth={1.5} />
+      <div className="gradient-border flex flex-col items-center justify-center text-center animate-fade-in w-full"
+        style={{ minHeight: 480, padding: "40px 32px" }}>
+        <div className="relative mb-6">
+          <div className="absolute inset-0 bg-indigo-500/20 blur-2xl rounded-full" />
+          <div className="relative" style={{
+            width: 52, height: 52, borderRadius: 16,
+            background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <KeyRound size={24} color="#6366f1" strokeWidth={1.5} className="opacity-60" />
+          </div>
         </div>
-        <p style={{ fontSize: 13, fontWeight: 600, color: "#94a3b8", marginBottom: 4 }}>No tokens yet</p>
-        <p style={{ fontSize: 11, color: "#64748b", lineHeight: 1.7 }}>
+        <p style={{ fontSize: 14, fontWeight: 700, color: "#cbd5e1", marginBottom: 6 }}>No tokens yet</p>
+        <p style={{ fontSize: 12, color: "#64748b", lineHeight: 1.6, maxWidth: 200 }}>
           Fill the form and click<br />
-          <span style={{ color: "#818cf8" }}>Generate Tokens</span>
+          <span className="text-indigo-400 font-semibold">Generate Tokens</span>
         </p>
       </div>
     );

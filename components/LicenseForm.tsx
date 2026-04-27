@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Building2, Users, Monitor, Cpu,
-  CalendarDays, Plus, X, Key, AlertCircle,
+  CalendarDays, Plus, X, Key, AlertCircle, ShieldCheck
 } from "lucide-react";
 
 export type LicenseType = "account-based" | "station-based";
@@ -90,16 +90,21 @@ export default function LicenseForm({ onGenerate, onReset, loading }: Props) {
   const tokenCount = isStation ? hwids.length : quantity;
 
   return (
-    <div className="gradient-border animate-fade-in" style={{ padding: "20px 22px" }}>
+    <div className="gradient-border animate-fade-in w-full" style={{ padding: "24px 26px" }}>
 
       {/* ── Card header ──────────────────────────────── */}
       <div className="flex items-center gap-2.5 mb-5">
         <div style={{
-          width: 30, height: 30, borderRadius: 10, flexShrink: 0,
-          background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.22)",
+          width: 32, height: 32, borderRadius: 10, flexShrink: 0,
+          background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)",
+          border: "1px solid rgba(99,102,241,0.3)",
           display: "flex", alignItems: "center", justifyContent: "center",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+          position: "relative",
+          overflow: "hidden"
         }}>
-          <Key size={14} color="#818cf8" strokeWidth={2.5} />
+          <div className="absolute inset-0 bg-indigo-500/5 blur-md pointer-events-none" />
+          <ShieldCheck size={18} className="text-white relative z-10" strokeWidth={2} />
         </div>
         <div>
           <p className="text-sm font-bold text-white leading-none">Generate License</p>
